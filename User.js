@@ -4,27 +4,26 @@ import axios from 'axios'
 function User(props)
 {
     const [repos,setRepos] = useState([])
+    const ID =props.match.params.id
+    const Name=props.match.params.name
+    console.log(Name)
     useEffect(() => {
         const fetchRepos = async () => {
-            const res =await axios.get('https://api.github.com/repos/octocat/Hello-World/issues')
+            const res =await axios.get(`https://api.github.com/repos/octocat/Hello-World/issues/ ${ID}`)
             setRepos(res.data)
+            console.log(res)
         }
         fetchRepos()
-    },[])
+    },[ID])
     console.warn(props)
     return(
     <div>
-        <ul>
-                {repos.map((repo) => (
-                    <li key ={repo.id}>
-                       <p>Title :{repo.title},{props.match.params.id},{props.match.params.name}</p> 
-                        <p>State :{repo.state},{props.match.params.id},{props.match.params.name}</p>
-                        <p>Created_at :{repo.created_at},{props.match.params.id},{props.match.params.name}</p>
-                        <p>Updated_at :{repo.updated_at},{props.match.params.id},{props.match.params.name}</p>
-                        </li>
-                ))}
-            </ul>
-
+                <p>Title :{repos.title}</p> 
+                <p>State :{repos.state}</p>
+                <p>Created_at :{repos.created_at}</p>
+                <p>Updated_at :{repos.updated_at}</p>
+               
+                
     </div>
     )
 }
